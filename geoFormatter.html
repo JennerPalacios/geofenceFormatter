@@ -1,0 +1,330 @@
+<html>
+<head>
+<title>Geofence Formatter - by Jenner Palacios</title><!--
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=yes, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="PokeMap">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#3b3b3b">
+-->
+<style>
+html {
+	background: #000;
+}
+body {
+	margin: auto;
+	width: 60%;
+	background: #EFEFEF;
+	padding: 0.5em;
+	font-family: "Arial";
+	font-size: 0.9em;
+}
+button {
+	display: inline-block;
+	margin: 0.5em;
+	padding: 0.3em 0.8em;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 1.2em;
+}
+div {
+	display: inline-block;
+	width: 28em;
+	margin: 0.5em 1.5em;
+	vertical-align: top;
+}
+textarea {
+	width: 100%;
+	height: 17em;
+}
+#GMAP, #JSON {
+	font-size: 0.8em;
+}
+#aGMAP, #aJSON {
+	font-size: 0.6em;
+	height: 25em;
+}
+b {
+	font-weight: normal;
+	background: #CCC;
+	padding: 0.2em 0.5em;
+	font-family: "Arial";
+	margin: 0.1em 0.2em;
+	display: inline-block;
+}
+h1,h2,h3,h4,p {
+	margin: 0;
+	padding: 0;
+}
+input, textarea {
+	padding: 0.2em 0.5em;
+}
+input {
+	margin: 0.2em;
+}
+footer {
+	display: block;
+	margin: auto;
+	padding: 1em;
+	text-align: center;
+}
+footer b {
+	background: none;
+	padding: 0;
+	margin: 0;
+}
+div#colorpick {
+	margin: 0;
+	padding: 0.2em;
+	display: none;
+	position: absolute;
+	z-index:9999999;
+	border: solid 1px #000;
+	background: url('./img/bg.jpg') no-repeat top left;
+	background-size: 100%;
+	width: 28em;
+}
+#colorpick table {
+	border-spacing: 0.2em;
+	padding: 1.5em;
+}
+#colorpick table tr td {
+	width: 2em;
+	height: 2em;
+	border: dotted 1px #000;
+	cursor: pointer;
+	opacity: 0.4;
+}
+#colorpick table tr td:hover {
+	border: solid 1px #000;
+	opacity: 0.7;
+}
+</style>
+<script>
+function ClearAll() {
+	document.getElementById("PA").value="";
+	document.getElementById("GMAP").value="";
+	document.getElementById("JSON").value="";
+	document.getElementById("aGMAP").value="";
+	document.getElementById("aJSON").value="";
+}
+function loadcoords(){
+	var PAinPut=document.getElementById("PA");
+	var GMAPinPut=document.getElementById("GMAP");
+	var JSONinPut=document.getElementById("JSON");
+	
+	if(!GMAPinPut.value && !PAinPut.value && !JSONinPut.value){
+		return alert("There is nothing to format...");
+	}
+	if(PAinPut.value && !GMAPinPut.value && !JSONinPut.value){
+		var PAinPut=PAinPut.value.split("\n");
+		
+		var gmapFieldData=""; var jsonFieldData="";
+		for (PAinPutLine=0; PAinPutLine < PAinPut.length; PAinPutLine++) {
+			gmapFieldData += "{";
+			jsonFieldData += "[";
+			var uics=PAinPut[PAinPutLine].split(",");
+			gmapFieldData += "lat: "+uics[0]+", lng: "+uics[1];
+			jsonFieldData += uics[1]+","+uics[0];
+			gmapFieldData += "},\n";
+			jsonFieldData += "],\n";
+		}
+		gmapFieldData=gmapFieldData.slice(0, -2);
+		GMAPinPut.value="[\n"+gmapFieldData+"\n]";
+		PAinPut[0] = PAinPut[0].split(",");
+		JSONinPut.value="[\n"+jsonFieldData+"["+PAinPut[0][1]+","+PAinPut[0][0]+"]\n]";
+		
+		
+		// ADVANCED FUNCTION
+		
+		var idIn=document.getElementById("id");
+		var labelIn=document.getElementById("label");
+		var colorIn=document.getElementById("color");
+		var centerIn=document.getElementById("center");
+		
+		if(idIn.value && labelIn.value && colorIn.value && centerIn.value) {
+			var aGMAPinPut=document.getElementById("aGMAP");
+			var aJSONinPut=document.getElementById("aJSON");
+			centerIn=centerIn.value.split(",");
+			var PAinPut=document.getElementById("PA").value.split("\n");
+			
+			var gmapFieldData=""; var jsonFieldData="";
+			for (PAinPutLine=0; PAinPutLine < PAinPut.length; PAinPutLine++) {
+				gmapFieldData += "{";
+				jsonFieldData += "						[";
+				var uics=PAinPut[PAinPutLine].split(",");
+				gmapFieldData += "lat:"+uics[0]+",lng:"+uics[1];
+				jsonFieldData += uics[1]+","+uics[0];
+				gmapFieldData += "},";
+				jsonFieldData += "],\n";
+			}
+			gmapFieldData=gmapFieldData.slice(0, -1);
+			aGMAPinPut.value="//################################################\n//		ZONE NAME: "+labelIn.value
+				+"\n//################################################\nvar loc_"+idIn.value+"=["+gmapFieldData+"];\n"
+				+"var zone_"+idIn.value+"=new google.maps.Polygon({paths: loc_"+idIn.value+",strokeColor: '"
+				+colorIn.value+"',strokeOpacity: 0.8,strokeWeight: 1,fillColor: '"
+				+colorIn.value+"',fillOpacity: 0.35,label: '"+labelIn.value+"',center: {lat: "+centerIn[0]+", lng: "+centerIn[1]+" }});\n"
+				+"zone_"+idIn.value+".setMap(map);\n"
+				+"zone_"+idIn.value+".addListener('click', function(event){infoWindow=new google.maps.InfoWindow;var infodata=zone_"
+				+idIn.value+".label;var label=zone_"+idIn.value+".label;var contentString='<div id=\"content\">'+ label + '</div>';"
+				+"infoWindow.setContent(contentString);infoWindow.setPosition(zone_"+idIn.value+".center); infoWindow.open(map);});\n\n";
+			
+			PAinPut[0] = PAinPut[0].split(",");
+			aJSONoutPut="[\n"+jsonFieldData+"						["+PAinPut[0][1]+","+PAinPut[0][0]+"]\n					]";
+			aJSONinPut.value="		{\n			\"type\": \"Feature\", \n			\"properties\": {\n				\"label\": \""+labelIn.value+"\","
+				+"\n				\"color\": \""+colorIn.value+"\"\n			},\n			\"geometry\": {\n				"
+				+"\"type\": \"Polygon\", \"coordinates\": [\n					"+aJSONoutPut+"\n				]\n			}\n		},\n\n";
+		}
+		// END ADVANCED FUNCTION
+		
+		
+		return
+	}
+	if(GMAPinPut.value && !PAinPut.value && !JSONinPut.value){
+		
+		var GMAPdata=JSON.parse(GMAPinPut.value);
+		var paFieldData=""; var jsonFieldData="";
+		for (GMAPinPutLine=0; GMAPinPutLine < GMAPdata.length; GMAPinPutLine++) {
+			paFieldData += GMAPdata[GMAPinPutLine].lat+","+GMAPdata[GMAPinPutLine].lng+"\n";
+			jsonFieldData += "["+GMAPdata[GMAPinPutLine].lng+","+GMAPdata[GMAPinPutLine].lat+"],\n";
+		}
+		PAinPut.value=paFieldData.slice(0, -1);
+		JSONinPut.value="[\n"+jsonFieldData+"["+GMAPdata[0].lng+","+GMAPdata[0].lat+"]\n]";
+		return
+		
+	}
+	if(JSONinPut.value && !PAinPut.value && !GMAPinPut.value){
+		JSONinPut=JSONinPut.value.slice(0, -1);
+		JSONinPut=JSONinPut.slice(2, -1);
+		JSONinPut=JSONinPut.split("\n");
+		var gmapFieldData=""; var paFieldData="";
+		JSONinPutNewlength=(JSONinPut.length*1)-1;
+		for (JSONinPutLine=0; JSONinPutLine < JSONinPutNewlength; JSONinPutLine++) {
+			jsonFieldData=JSONinPut[JSONinPutLine].slice(1, -2);
+			jsonFieldData=jsonFieldData.split(",");
+			gmapFieldData += "{\"lat\": \""+jsonFieldData[1]+"\", \"lng\": \""+jsonFieldData[0]+"\"},\n";
+			paFieldData += jsonFieldData[1]+","+jsonFieldData[0]+"\n";
+		}
+		gmapFieldData=gmapFieldData.slice(0, -2);
+		paFieldData=paFieldData.slice(0, -1);
+		GMAPinPut.value="[\n"+gmapFieldData+"\n]";
+		PAinPut.value=paFieldData;
+		return
+	}
+	if(PAinPut.value && GMAPinPut.value && JSONinPut.value){
+		return alert("Only one input, please clear all others");
+	}
+}
+function colorPicked(el){
+	document.getElementById('color').value=el;
+	document.getElementById('colorpick').style.display='none';
+}
+function grabFirstCoord(){
+	var PAinPut=document.getElementById("PA").value;
+	if(PAinPut) {
+		PAinPut=PAinPut.split("\n");
+		document.getElementById("center").value=PAinPut[0];
+	}
+}
+</script>
+</head>
+<body>
+<div>
+<h1>Coordinates ONLY!</h1>
+<p>
+PA: <b>47.679227,-122.120931</b><br />
+GMAPS: <b>{"lat": "47.679227", "lng": "-122.120931"}</b><br />
+JSON: <b>[-122.120931,47.679227]</b>
+</p>
+<button onClick="loadcoords()">CONVERT</button><button onClick="ClearAll()">CLEAR ALL</button>
+<fieldset>
+<legend>Advance Settings (<small>from <b>PA</b> format to <b>gmaps/json</b> only!</small>)</legend>
+<input type="number" id="id" placeholder="zone#" />
+<input type="text" id="label" placeholder="label" onClick="javascript: this.select()"/>
+<input type="text" id="color" placeholder="color" onClick="javascript: document.getElementById('colorpick').style.display='block'"/>
+<div id="colorpick">
+<b onClick="javascript: document.getElementById('colorpick').style.display='none'" 
+		style="position:absolute;font-weight:bold;color:#F00;cursor:pointer;border:solid 1px #F00;">x</b>
+<table><tr>
+<td style="background:#CC0000" onClick="colorPicked('#CC0000')"></td>
+<td style="background:#FF0000" onClick="colorPicked('#FF0000')"></td>
+<td style="background:#FFCC00" onClick="colorPicked('#FFCC00')"></td>
+<td style="background:#FFFF00" onClick="colorPicked('#FFFF00')"></td>
+<td style="background:#99DD55" onClick="colorPicked('#99DD55')"></td>
+<td style="background:#00BB55" onClick="colorPicked('#00BB55')"></td>
+<td style="background:#00BBFF" onClick="colorPicked('#00BBFF')"></td>
+<td style="background:#0077CC" onClick="colorPicked('#0077CC')"></td>
+<td style="background:#002266" onClick="colorPicked('#002266')"></td>
+<td style="background:#7733AA" onClick="colorPicked('#7733AA')"></td>
+</tr><tr>
+<td style="background:#000000" onClick="colorPicked('#000000')"></td>
+<td style="background:#1d1b10" onClick="colorPicked('#1d1b10')"></td>
+<td style="background:#0f243e" onClick="colorPicked('#0f243e')"></td>
+<td style="background:#244061" onClick="colorPicked('#244061')"></td>
+<td style="background:#7f7f7f" onClick="colorPicked('#7f7f7f')"></td>
+<td style="background:#632423" onClick="colorPicked('#632423')"></td>
+<td style="background:#4f6128" onClick="colorPicked('#4f6128')"></td>
+<td style="background:#3f3151" onClick="colorPicked('#3f3151')"></td>
+<td style="background:#205867" onClick="colorPicked('#205867')"></td>
+<td style="background:#974806" onClick="colorPicked('#974806')"></td>
+</tr><tr>
+<td style="background:#262626" onClick="colorPicked('#262626')"></td>
+<td style="background:#494429" onClick="colorPicked('#494429')"></td>
+<td style="background:#17365d" onClick="colorPicked('#17365d')"></td>
+<td style="background:#366092" onClick="colorPicked('#366092')"></td>
+<td style="background:#a5a5a5" onClick="colorPicked('#a5a5a5')"></td>
+<td style="background:#953734" onClick="colorPicked('#953734')"></td>
+<td style="background:#76923c" onClick="colorPicked('#76923c')"></td>
+<td style="background:#5f497a" onClick="colorPicked('#5f497a')"></td>
+<td style="background:#31859b" onClick="colorPicked('#31859b')"></td>
+<td style="background:#e36c09" onClick="colorPicked('#e36c09')"></td>
+</tr><tr>
+<td style="background:#3f3f3f" onClick="colorPicked('#3f3f3f')"></td>
+<td style="background:#938953" onClick="colorPicked('#938953')"></td>
+<td style="background:#548dd4" onClick="colorPicked('#548dd4')"></td>
+<td style="background:#95b3d7" onClick="colorPicked('#95b3d7')"></td>
+<td style="background:#bfbfbf" onClick="colorPicked('#bfbfbf')"></td>
+<td style="background:#d99694" onClick="colorPicked('#d99694')"></td>
+<td style="background:#c3d69b" onClick="colorPicked('#c3d69b')"></td>
+<td style="background:#b2a1c7" onClick="colorPicked('#b2a1c7')"></td>
+<td style="background:#92cddc" onClick="colorPicked('#92cddc')"></td>
+<td style="background:#fac08f" onClick="colorPicked('#fac08f')"></td>
+</tr><tr>
+<td style="background:#7f7f7f" onClick="colorPicked('#7f7f7f')"></td>
+<td style="background:#ddd9c3" onClick="colorPicked('#ddd9c3')"></td>
+<td style="background:#c6d9f0" onClick="colorPicked('#c6d9f0')"></td>
+<td style="background:#dbe5f1" onClick="colorPicked('#dbe5f1')"></td>
+<td style="background:#f2f2f2" onClick="colorPicked('#f2f2f2')"></td>
+<td style="background:#f2dcdb" onClick="colorPicked('#f2dcdb')"></td>
+<td style="background:#ebf1dd" onClick="colorPicked('#ebf1dd')"></td>
+<td style="background:#e5e0ec" onClick="colorPicked('#e5e0ec')"></td>
+<td style="background:#dbeef3" onClick="colorPicked('#dbeef3')"></td>
+<td style="background:#fdeada" onClick="colorPicked('#fdeada')"></td>
+</tr></table>
+</div>
+<input type="text" id="center" placeholder="center" onClick="grabFirstCoord()" />
+</fieldset>
+</div>
+<div><h2>PokeAlarm (<small><small>geofence <u>without</u> <b>[label]</b>!</small></small>)</h2>
+<textarea id="PA"></textarea>
+</div>
+<div><h2>gMap</h2>
+<textarea id="GMAP"></textarea>
+</div>
+<div><h2>JsOn</h2>
+<textarea id="JSON"></textarea>
+</div>
+
+
+<div><h2>Advance gMap</h2>
+<textarea id="aGMAP"></textarea>
+</div>
+<div><h2>Advance JsOn</h2>
+<textarea id="aJSON"></textarea>
+</div>
+<footer>
+&copy; By: <b>Jenner Palacios</b>, July 2017
+</footer>
+</body>
+</html>
