@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>GeoJson to PokeAlarm Formatter - by Jenner Palacios</title><!--
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=yes, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="PokeMap">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#3b3b3b">
+-->
+<style>
+html {
+	background: #000;
+}
+body {
+	margin: auto;
+	width: 60%;
+	background: #EFEFEF;
+	padding: 0.5em;
+	font-family: "Arial";
+	font-size: 0.9em;
+}
+button {
+	display: inline-block;
+	margin: 0.5em;
+	padding: 0.3em 0.8em;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 1.2em;
+}
+div {
+	display: inline-block;
+	vertical-align: top;
+}
+div:nth-child(1) {
+	width: 24em;
+}
+div:nth-child(2) {
+	width: 37.5em;
+}
+div:nth-child(3) {
+	width: 62em;
+}
+textarea {
+	width: 100%;
+}
+#GMAP {
+	font-size: 0.7em;
+	height: 30em;
+}
+#EDITOR {
+	font-size: 0.8em;
+	height: 60em;
+}
+b {
+	font-weight: normal;
+	background: #CCC;
+	padding: 0.2em 0.5em;
+	font-family: "Arial";
+	margin: 0.1em 0.2em;
+	display: inline-block;
+}
+h1,h2,h3,h4,p {
+	margin: 0;
+	padding: 0;
+}
+input, textarea {
+	padding: 0.2em 0.5em;
+}
+footer {
+	display: block;
+	margin: auto;
+	padding: 1em;
+	text-align: center;
+}
+footer b {
+	background: none;
+	padding: 0;
+	margin: 0;
+}
+</style>
+<script>
+function ClearAll() {
+	document.getElementById("GMAP").value = "";
+	document.getElementById("EDITOR").value = "";
+}
+var loadex = "no";
+function loadcoords(){
+	var GMAPinPut = document.getElementById("GMAP");
+	var EDITOR = document.getElementById("EDITOR");
+	
+	if(!GMAPinPut.value){
+		return alert("There is nothing to format...");
+	}
+	
+	var GMAPdata = JSON.parse(GMAPinPut.value); 
+	var EDITORdata = ""; var GMAPzones = "";
+	
+	var GMAPinPutBlocks = ""; var GMAPinPutCoords = ""; var zoneLabel= ""; var zoneColor="";
+		EDITOR.value = "";
+		
+	for (GMAPzones=0; GMAPzones < GMAPdata.features.length; GMAPzones++) {
+		zoneLabel = GMAPdata.features[GMAPzones].properties.label;
+		zoneColor = GMAPdata.features[GMAPzones].properties.color;
+		
+		// get all the coords and group them
+		var coords = GMAPdata.features[GMAPzones].geometry.coordinates; coords = coords.toString(); coords = coords.split(",");
+		var coordcount=""; coordsA = coords.length; coordsA = coordsA - 2;
+		
+		EDITORdata += "["+ zoneLabel +"]\n";
+		// group all coords gmap format
+		for (coordcount=0; coordcount < coordsA ; coordcount++) {
+			coordcount++;
+			EDITORdata += coords[coordcount] + ",";
+			coordcount--; 
+			EDITORdata += coords[coordcount] + "\n";
+			coordcount++;
+						
+		}
+		EDITORdata = EDITORdata.slice(0,-1); EDITORdata += "\n"; 
+		
+		
+	}
+	EDITOR.value = EDITORdata;
+}
+</script>
+</head>
+<body>
+<div>
+<h1>gMaps to PA ONLY!</h1>
+<br />
+<p>
+Must be gMaps <b>FULL CODE!!!</b><br />
+</p>
+<br />
+<button onClick="loadcoords()">CONVERT</button><button onClick="ClearAll()">CLEAR ALL</button>
+</div>
+<div><h2>gMaps <b>.geojson</b> code</h2>
+<textarea id="GMAP"></textarea>
+</div>
+<div><h2>PokeAlarm Output</h2>
+<textarea id="EDITOR" onclick="javascript: this.select();"></textarea>
+</div>
+<footer>
+&copy; By: <b>Jenner Palacios</b>, July 2017
+</footer>
+</body>
+</html>
