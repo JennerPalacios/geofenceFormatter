@@ -6,7 +6,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "<b>S</b>eattle<b>P</b>oke<b>M</b>aps.<i>com</i><br />Coverage Map",
-				"color": "#f2dcdb"
+				"color": "#FF0000"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
