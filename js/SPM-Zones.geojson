@@ -5,7 +5,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>05</b>",
-				"color": "#880000"
+				"color": "#953734"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -38,7 +38,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>06</b>",
-				"color": "#880000"
+				"color": "#CC0000"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -65,7 +65,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>07</b>",
-				"color": "#880000"
+				"color": "#FF0000"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -129,7 +129,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>08S</b>",
-				"color": "#880000"
+				"color": "#953734"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -158,7 +158,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>17</b>",
-				"color": "#880000"
+				"color": "#974806"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -196,7 +196,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>18</b>",
-				"color": "#880000"
+				"color": "#e36c09"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -217,7 +217,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>19</b>",
-				"color": "#880000"
+				"color": "#fac08f"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -248,7 +248,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>20</b>",
-				"color": "#880000"
+				"color": "#FFCC00"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -286,7 +286,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>21</b>",
-				"color": "#880000"
+				"color": "#974806"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -392,7 +392,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>02</b><br />Zone: <b>22</b>",
-				"color": "#880000"
+				"color": "#e36c09"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -451,7 +451,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>9</b>",
-				"color": "#7733AA"
+				"color": "#4f6128"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -470,7 +470,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>10 </b>",
-				"color": "#7733AA"
+				"color": "#00BB55"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -520,7 +520,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>11 </b>",
-				"color": "#7733AA"
+				"color": "#76923c"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -552,7 +552,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>12 </b>",
-				"color": "#7733AA"
+				"color": "#99DD55"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -579,7 +579,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>13 </b>",
-				"color": "#7733AA"
+				"color": "#c3d69b"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -609,7 +609,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>14 </b>",
-				"color": "#7733AA"
+				"color": "#4f6128"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -642,7 +642,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>03</b><br />Zone: <b>15 </b>",
-				"color": "#7733AA"
+				"color": "#00BB55"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -715,7 +715,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>X</b><br />Zone: <b>1 </b>",
-				"color": "#0077CC"
+				"color": "#002266"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -772,7 +772,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>X</b><br />Zone: <b>3E </b>",
-				"color": "#0077CC"
+				"color": "#205867"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -791,7 +791,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>X</b><br />Zone: <b>3W </b>",
-				"color": "#0077CC"
+				"color": "#31859b"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
@@ -822,7 +822,7 @@
 			"type": "Feature", 
 			"properties": {
 				"label": "Server: <b>X</b><br />Zone: <b>4 </b>",
-				"color": "#0077CC"
+				"color": "#92cddc"
 			},
 			"geometry": {
 				"type": "Polygon", "coordinates": [
